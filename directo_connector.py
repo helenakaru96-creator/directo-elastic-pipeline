@@ -221,7 +221,7 @@ class DirectoConnector:
 if __name__ == "__main__":
     
     # Test the connector
-    TOKEN = "directo_api_token_here"
+    TOKEN = "FD7464CD74C14E268E30AB8E48CE5DDC9B150EBD2B524C5F9FDE239F065C697D"
     
     connector = DirectoConnector(TOKEN)
     

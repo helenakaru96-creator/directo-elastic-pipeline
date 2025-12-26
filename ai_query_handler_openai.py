@@ -86,20 +86,20 @@ class AIQueryHandler:
         prompt = f"""You are a financial data analyst. Convert this natural language question into an Elasticsearch query.
 
 Available indices and their fields:
-- invoices: number, customercode, transactiondate, amount, vat, total, country, region, salesperson, project
-- purchases: number, supplier, date1, date2, amount, vat, total, status, confirmed
-- items: code, class, type, barcode, supplier, name, description, price, cost
-- projects: code, customer, supplier, orderer, contract, project_manager, country, region
-- customers: code, name, regno, email, phone, country, region
-- objects: code, master, type, level, name, country, region
+- invoices: number, date, duedate, transactiondate, vatzone, paymentterm, country, currency, currencyrate, customercode, customername, comment, address1, address2, address3, salesman, confirmed, netamount, vat, balance, totalamount, ts
+- purchases: number, date, duedate, sum, supplierinvoiceno, paymentterm, supplier, suppliername, transactiontime, vat, asset, confirmed, ts
+- items: code, name, class, class_name, unit, salesprice, vatprice, vatprice1, vatprice2, vatprice3, vatprice4, cost, closed, ts, tscreated
+- projects: code, name, manager, start, end, master, type, country, closed, points, createdts, ts
+- customers: code, name, class, regno, type, salesman, country, email, address1, address2, ts, ts_created
+- objects: code, name, type, level, ts
 
 User question: {user_question}
 
 Generate an Elasticsearch query DSL in JSON format. Include:
 1. The index/indices to search
-2. Filters for specific criteria (country, region, salesperson, project, etc.)
+2. Filters for specific criteria (country, salesman, project, etc.)
 3. Aggregations if the question asks for sums, averages, or groupings
-4. Date ranges if mentioned
+4. Date ranges if mentioned (use transactiondate for invoices, date for purchases)
 
 Return ONLY valid JSON with this structure:
 {{

@@ -76,117 +76,134 @@ class ElasticsearchIndexer:
     def create_index_mappings(self):
         """Create index mappings for financial data"""
         
-        # Invoice index mapping
+        # Invoice index mapping (based on actual Directo XML)
         invoice_mapping = {
             "mappings": {
                 "properties": {
                     "number": {"type": "keyword"},
-                    "customercode": {"type": "keyword"},
+                    "date": {"type": "date"},
+                    "duedate": {"type": "date"},
                     "transactiondate": {"type": "date"},
-                    "date1": {"type": "date"},
-                    "date2": {"type": "date"},
-                    "ts": {"type": "date"},
-                    "amount": {"type": "float"},
-                    "vat": {"type": "float"},
-                    "total": {"type": "float"},
+                    "vatzone": {"type": "keyword"},
+                    "paymentterm": {"type": "keyword"},
                     "country": {"type": "keyword"},
-                    "region": {"type": "keyword"},
-                    "salesperson": {"type": "keyword"},
-                    "project": {"type": "keyword"},
+                    "currency": {"type": "keyword"},
+                    "currencyrate": {"type": "float"},
+                    "customercode": {"type": "keyword"},
+                    "customername": {"type": "text"},
+                    "comment": {"type": "text"},
+                    "address1": {"type": "text"},
+                    "address2": {"type": "text"},
+                    "address3": {"type": "text"},
+                    "salesman": {"type": "keyword"},
+                    "confirmed": {"type": "keyword"},
+                    "netamount": {"type": "float"},
+                    "vat": {"type": "float"},
+                    "balance": {"type": "float"},
+                    "totalamount": {"type": "float"},
+                    "ts": {"type": "date"},
                     "indexed_at": {"type": "date"}
                 }
             }
         }
         
-        # Purchase index mapping
+        # Purchase index mapping (based on actual Directo XML)
         purchase_mapping = {
             "mappings": {
                 "properties": {
                     "number": {"type": "keyword"},
+                    "date": {"type": "date"},
+                    "duedate": {"type": "date"},
+                    "sum": {"type": "float"},
+                    "supplierinvoiceno": {"type": "keyword"},
+                    "paymentterm": {"type": "keyword"},
                     "supplier": {"type": "keyword"},
-                    "date1": {"type": "date"},
-                    "date2": {"type": "date"},
-                    "status": {"type": "keyword"},
-                    "confirmed": {"type": "keyword"},
-                    "amount": {"type": "float"},
+                    "suppliername": {"type": "text"},
+                    "transactiontime": {"type": "date"},
                     "vat": {"type": "float"},
-                    "total": {"type": "float"},
+                    "asset": {"type": "keyword"},
+                    "confirmed": {"type": "keyword"},
                     "ts": {"type": "date"},
                     "indexed_at": {"type": "date"}
                 }
             }
         }
         
-        # Item index mapping
+        # Item index mapping (based on actual Directo XML)
         item_mapping = {
             "mappings": {
                 "properties": {
                     "code": {"type": "keyword"},
-                    "class": {"type": "keyword"},
-                    "type": {"type": "keyword"},
-                    "barcode": {"type": "keyword"},
-                    "supplier": {"type": "keyword"},
-                    "supplieritem": {"type": "keyword"},
-                    "closed": {"type": "keyword"},
                     "name": {"type": "text"},
-                    "description": {"type": "text"},
-                    "price": {"type": "float"},
+                    "class": {"type": "keyword"},
+                    "class_name": {"type": "text"},
+                    "unit": {"type": "keyword"},
+                    "salesprice": {"type": "float"},
+                    "vatprice": {"type": "float"},
+                    "vatprice1": {"type": "float"},
+                    "vatprice2": {"type": "float"},
+                    "vatprice3": {"type": "float"},
+                    "vatprice4": {"type": "float"},
                     "cost": {"type": "float"},
+                    "closed": {"type": "keyword"},
                     "ts": {"type": "date"},
+                    "tscreated": {"type": "date"},
                     "indexed_at": {"type": "date"}
                 }
             }
         }
         
-        # Project index mapping
+        # Project index mapping (based on actual Directo XML)
         project_mapping = {
             "mappings": {
                 "properties": {
                     "code": {"type": "keyword"},
-                    "customer": {"type": "keyword"},
-                    "supplier": {"type": "keyword"},
-                    "orderer": {"type": "keyword"},
-                    "contract": {"type": "keyword"},
-                    "closed": {"type": "keyword"},
-                    "project_manager": {"type": "keyword"},
+                    "name": {"type": "text"},
+                    "manager": {"type": "keyword"},
+                    "start": {"type": "date"},
+                    "end": {"type": "date"},
+                    "master": {"type": "keyword"},
+                    "type": {"type": "keyword"},
                     "country": {"type": "keyword"},
-                    "region": {"type": "keyword"},
+                    "closed": {"type": "keyword"},
+                    "points": {"type": "integer"},
+                    "createdts": {"type": "date"},
                     "ts": {"type": "date"},
                     "indexed_at": {"type": "date"}
                 }
             }
         }
         
-        # Customer index mapping
+        # Customer index mapping (based on actual Directo XML)
         customer_mapping = {
             "mappings": {
                 "properties": {
                     "code": {"type": "keyword"},
-                    "loyaltycard": {"type": "keyword"},
-                    "regno": {"type": "keyword"},
-                    "email": {"type": "keyword"},
-                    "phone": {"type": "keyword"},
-                    "closed": {"type": "keyword"},
                     "name": {"type": "text"},
+                    "class": {"type": "keyword"},
+                    "regno": {"type": "keyword"},
+                    "type": {"type": "keyword"},
+                    "salesman": {"type": "keyword"},
                     "country": {"type": "keyword"},
-                    "region": {"type": "keyword"},
+                    "email": {"type": "keyword"},
+                    "address1": {"type": "text"},
+                    "address2": {"type": "text"},
                     "ts": {"type": "date"},
+                    "ts_created": {"type": "date"},
                     "indexed_at": {"type": "date"}
                 }
             }
         }
         
-        # Object index mapping
+        # Object index mapping (based on actual Directo XML)
         object_mapping = {
             "mappings": {
                 "properties": {
                     "code": {"type": "keyword"},
-                    "master": {"type": "keyword"},
-                    "type": {"type": "keyword"},
-                    "level": {"type": "integer"},
                     "name": {"type": "text"},
-                    "country": {"type": "keyword"},
-                    "region": {"type": "keyword"},
+                    "type": {"type": "keyword"},
+                    "level": {"type": "keyword"},
+                    "ts": {"type": "date"},
                     "indexed_at": {"type": "date"}
                 }
             }
